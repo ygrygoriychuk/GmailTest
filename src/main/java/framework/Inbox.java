@@ -8,18 +8,18 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Inbox {
 
-    WebDriver driver;
+    private WebDriver driver;
 
     @FindBy(xpath="//span[@data-test-id='message-subject']")
-    WebElement firstLetter;
+    private WebElement firstLetter;
     @FindBy(xpath="//div[@data-test-id='message-view-body-content']")
-    WebElement txtBodyContent;
+    private WebElement txtBodyContent;
     @FindBy(xpath="//button[@data-test-id='toolbar-delete']")
-    WebElement btnDelete;
+    private WebElement btnDelete;
     @FindBy(xpath="//button[@data-test-id='folder-menu-button']")
-    WebElement btnMove;
+    private WebElement btnMove;
     @FindBy(xpath="//*[@id=\"6\"]")
-    WebElement spamOption;
+    private WebElement spamOption;
 
     public Inbox(WebDriver driver) {
         this.driver = driver;
@@ -44,8 +44,9 @@ public class Inbox {
     //Move a letter to Spam folder
     public void moveToSpam(){
         btnMove.click();
-        Actions builder = new Actions(driver);
-        builder.click(spamOption).build().perform();
+        spamOption.click();
+//        Actions builder = new Actions(driver);
+//        builder.click(spamOption).build().perform();
     }
 
 }

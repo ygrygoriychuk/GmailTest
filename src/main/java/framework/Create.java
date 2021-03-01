@@ -7,18 +7,18 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Create {
 
-    WebDriver driver;
+     private WebDriver driver;
 
     @FindBy(id="message-to-field")
-    WebElement txtTo;
+    private WebElement txtTo;
     @FindBy(xpath="//input[@data-test-id='compose-subject']")
-    WebElement txtSubject;
+    private WebElement txtSubject;
     @FindBy(id="editor-container")
-    WebElement txtEdit;
+    private WebElement txtEdit;
     @FindBy(xpath="//div[@data-test-id='rte']")
-    WebElement txtBody;
+    private WebElement txtBody;
     @FindBy(xpath="//button[@data-test-id='compose-send-button']")
-    WebElement btnSubmit;
+    private WebElement btnSubmit;
 
     public Create(WebDriver driver) {
         this.driver = driver;

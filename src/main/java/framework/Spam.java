@@ -7,12 +7,12 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Spam {
 
-    WebDriver driver;
+    private WebDriver driver;
 
     @FindBy(xpath="//span[@data-test-id='message-subject']")
-    WebElement firstLetter;
+    private WebElement firstLetter;
     @FindBy(xpath="//div[@data-test-id='message-view-body-content']")
-    WebElement txtBodyContent;
+    private WebElement txtBodyContent;
 
     public Spam(WebDriver driver) {
         this.driver = driver;

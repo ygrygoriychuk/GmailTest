@@ -7,14 +7,14 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LeftPanel {
 
-    WebDriver driver;
+    private WebDriver driver;
 
     @FindBy(xpath="//a[@data-test-id='compose-button']")
-    WebElement btnCreate;
+    private WebElement btnCreate;
     @FindBy(xpath="//span[@data-test-folder-name='Inbox']")
-    WebElement btnInbox;
+    private WebElement btnInbox;
     @FindBy(xpath="//a[@data-test-folder-name='Bulk']")
-    WebElement btnSpam;
+    private WebElement btnSpam;
 
     public LeftPanel(WebDriver driver) {
         this.driver = driver;

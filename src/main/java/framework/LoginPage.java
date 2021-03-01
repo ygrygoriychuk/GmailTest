@@ -11,24 +11,24 @@ import java.util.Properties;
 
 public class LoginPage {
 
-    Properties properties;
-    WebDriver driver;
+    private Properties properties;
+    private WebDriver driver;
 
     @FindBy(xpath="//*[@id=\"signin-main\"]/div[1]/a[2]/span")
-    WebElement btnSignIn;
+    private WebElement btnSignIn;
     @FindBy(id="login-username")
-    WebElement txtUsername;
+    private WebElement txtUsername;
     @FindBy(id="login-passwd")
-    WebElement txtPassword;
+    private WebElement txtPassword;
     @FindBy(id="login-signin")
-    WebElement btnNext;
+    private WebElement btnNext;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         properties = new Properties();
         try {
-            properties.load(new FileInputStream(System.getProperty("user.dir")+"\\configs\\Configuation.properties"));
+            properties.load(new FileInputStream(System.getProperty("user.dir")+"src\\main\\resources\\configs\\credentials.properties"));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -36,23 +36,31 @@ public class LoginPage {
     }
 
     //Set user name in textbox
-    public void setUserName(){
+    private void setUserName(){
             txtUsername.sendKeys(properties.getProperty("login"));
     }
 
     //Set password in password textbox
-    public void setPassword(){
+    private void setPassword(){
         txtPassword.sendKeys(properties.getProperty("password"));
     }
 
     //Click on login button
-    public void clickSignIn(){
+    private void clickSignIn(){
         btnSignIn.click();
     }
 
     //Click on next button
-    public void clickNext(){
+    private void clickNext(){
         btnNext.click();
+    }
+
+    public void loginYahooMail() {
+        clickSignIn();
+        setUserName();
+        clickNext();
+        setPassword();
+        clickNext();
     }
 
 }

@@ -38,7 +38,8 @@ public class YahooTest {
 
 //    @Test(priority = 1)
 //    public void writeLetters() {
-//        loginYahooMail();
+//        login = new LoginPage(driver);
+//        login.loginYahooMail();
 //        writeLetter("yhryhoriychuk@yahoo.com", "Hello!", "Hello!");
 //        writeLetter("yhryhoriychuk@yahoo.com", "Hello Body!", "Hello!");
 //    }
@@ -46,7 +47,8 @@ public class YahooTest {
     @Test(priority = 2, groups = { "functest" })
 
     public void checkWrittenLetter() {
-        loginYahooMail();
+        login = new LoginPage(driver);
+        login.loginYahooMail();
         leftPanel = new LeftPanel(driver);
         leftPanel.clickInbox();
         inbox = new Inbox(driver);
@@ -59,7 +61,8 @@ public class YahooTest {
 
     @Test(priority = 3, groups = { "functest" })
     public void deleteLetter() {
-        loginYahooMail();
+        login = new LoginPage(driver);
+        login.loginYahooMail();
         leftPanel = new LeftPanel(driver);
         leftPanel.clickInbox();
         inbox = new Inbox(driver);
@@ -69,7 +72,8 @@ public class YahooTest {
 
     @Test(priority = 4, groups = { "functest1" })
     public void spamLetter() {
-        loginYahooMail();
+        login = new LoginPage(driver);
+        login.loginYahooMail();
         leftPanel = new LeftPanel(driver);
         leftPanel.clickInbox();
         inbox = new Inbox(driver);
@@ -79,7 +83,8 @@ public class YahooTest {
 
     @Test(priority = 5, groups = { "functest1" })
     public void checkSpamLetter() {
-        loginYahooMail();
+        login = new LoginPage(driver);
+        login.loginYahooMail();
         leftPanel = new LeftPanel(driver);
         leftPanel.clickSpam();
         spam = new Spam(driver);
@@ -94,15 +99,6 @@ public class YahooTest {
             WebDriverFactory.killDriverInstance();
         }
 
-    }
-
-    public void loginYahooMail() {
-        login = new LoginPage(driver);
-        login.clickSignIn();
-        login.setUserName();
-        login.clickNext();
-        login.setPassword();
-        login.clickNext();
     }
 
     public void writeLetter(String recipient, String subject, String body) {
