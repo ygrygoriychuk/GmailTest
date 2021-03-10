@@ -1,24 +1,26 @@
 package framework;
 
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.*;
-import org.testng.Assert;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-public class YahooTest {
+import java.util.concurrent.TimeUnit;
+
+public class WriteLetters {
 
     private static final Logger logger = LogManager.getLogger(YahooTest.class);
     protected WebDriver driver;
     private LoginPage login;
     private LeftPanel leftPanel;
     private Inbox inbox;
+    private Spam spam;
+    private Create create;
 
-    public YahooTest() {
+    public WriteLetters() {
     }
 
     @BeforeMethod
@@ -31,32 +33,13 @@ public class YahooTest {
         driver.get("https://mail.yahoo.com");
     }
 
-    @Test(priority = 1)
-    public void checkWrittenLetter() {
+    @Test
+    public void writeLetters() {
         login = new LoginPage(driver);
         login.loginYahooMail();
-        leftPanel = new LeftPanel(driver);
-        leftPanel.clickInbox();
-        inbox = new Inbox(driver);
-        inbox.openFirstLetter();
-
-        logger.info(inbox.getBodyContent());
-        Assert.assertEquals(inbox.getBodyContent(),"Hello!");
+        writeLetter("yhryhoriychuk@yahoo.com", "Hello!", "Hello!");
+        writeLetter("yhryhoriychuk@yahoo.com", "Hello Body!", "Hello!");
     }
-
-    @Test(priority = 2)
-    public void deleteLetter() {
-        login = new LoginPage(driver);
-        login.loginYahooMail();
-        leftPanel = new LeftPanel(driver);
-        leftPanel.clickInbox();
-        inbox = new Inbox(driver);
-        inbox.openFirstLetter();
-        inbox.clickDelete();
-
-        logger.info(inbox.getConfirmDeleteText());
-        Assert.assertEquals(inbox.getConfirmDeleteText(),"Розмову видалено.");
-     }
 
     @AfterMethod
     public void tearDown() {
@@ -65,5 +48,14 @@ public class YahooTest {
         }
     }
 
-}
+    public void writeLetter(String recipient, String subject, String body) {
+        leftPanel = new LeftPanel(driver);
+        leftPanel.clickCreate();
+        create = new Create(driver);
+        create.setRecipient(recipient);
+        create.setSubject(subject);
+        create.setBody(body);
+        create.clickSubmit();
+    }
 
+}

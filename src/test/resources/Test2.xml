@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name = "Parallel Testing Suite" parallel = "classes" thread-count = "2">
+        <parameter name="browserName" value="chrome"/>
+    <test name = "Parallel Tests1">
+        <classes>
+            <class name = "framework.YahooTest" />
+            <class name = "framework.YahooTest1" />
+        </classes>
+    </test>
+</suite>

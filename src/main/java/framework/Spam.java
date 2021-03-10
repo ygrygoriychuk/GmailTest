@@ -13,6 +13,8 @@ public class Spam {
     private WebElement firstLetter;
     @FindBy(xpath="//div[@data-test-id='message-view-body-content']")
     private WebElement txtBodyContent;
+    @FindBy(xpath="//div[@data-test-id='virtual-list-container'/div]")
+    private WebElement mailContainer;
 
     public Spam(WebDriver driver) {
         this.driver = driver;
@@ -27,6 +29,11 @@ public class Spam {
     //Open first letter
     public void openFirstLetter(){
         firstLetter.click();
+    }
+
+    //get data-test-id value
+    public String getDataTestId(){
+        return mailContainer.getAttribute("data-test-id");
     }
 
 }

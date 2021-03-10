@@ -1,24 +1,27 @@
 package framework;
 
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-public class YahooTest {
+import java.util.concurrent.TimeUnit;
+
+public class YahooTest1 {
 
     private static final Logger logger = LogManager.getLogger(YahooTest.class);
     protected WebDriver driver;
     private LoginPage login;
     private LeftPanel leftPanel;
     private Inbox inbox;
+    private Spam spam;
+    private Create create;
 
-    public YahooTest() {
+    public YahooTest1() {
     }
 
     @BeforeMethod
@@ -32,33 +35,33 @@ public class YahooTest {
     }
 
     @Test(priority = 1)
-    public void checkWrittenLetter() {
+    public void spamLetter() {
         login = new LoginPage(driver);
         login.loginYahooMail();
         leftPanel = new LeftPanel(driver);
         leftPanel.clickInbox();
         inbox = new Inbox(driver);
         inbox.openFirstLetter();
+        inbox.moveToSpam();
 
-        logger.info(inbox.getBodyContent());
-        Assert.assertEquals(inbox.getBodyContent(),"Hello!");
+        logger.info(inbox.getConfirmToSpamText());
+        Assert.assertEquals(inbox.getConfirmToSpamText(),"Спам");
     }
 
     @Test(priority = 2)
-    public void deleteLetter() {
+    public void checkSpamLetter() {
         login = new LoginPage(driver);
         login.loginYahooMail();
         leftPanel = new LeftPanel(driver);
-        leftPanel.clickInbox();
-        inbox = new Inbox(driver);
-        inbox.openFirstLetter();
-        inbox.clickDelete();
+        leftPanel.clickSpam();
+        spam = new Spam(driver);
+        spam.openFirstLetter();
 
-        logger.info(inbox.getConfirmDeleteText());
-        Assert.assertEquals(inbox.getConfirmDeleteText(),"Розмову видалено.");
-     }
+        logger.info(spam.getBodyContent());
+        Assert.assertTrue(spam.getBodyContent().equals("Hello!"));
+    }
 
-    @AfterMethod
+    @AfterMethod(groups = { "functest", "functest1" })
     public void tearDown() {
         if (driver != null) {
             WebDriverFactory.killDriverInstance();
@@ -66,4 +69,3 @@ public class YahooTest {
     }
 
 }
-

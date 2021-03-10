@@ -28,7 +28,7 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
         properties = new Properties();
         try {
-            properties.load(new FileInputStream(System.getProperty("user.dir")+"src\\main\\resources\\configs\\credentials.properties"));
+            properties.load(new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\resources\\configs\\credentials.properties"));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -37,12 +37,14 @@ public class LoginPage {
 
     //Set user name in textbox
     private void setUserName(){
-            txtUsername.sendKeys(properties.getProperty("login"));
+//            txtUsername.sendKeys(properties.getProperty("login"));
+        txtUsername.sendKeys("yhryhoriychuk@yahoo.com");
     }
 
     //Set password in password textbox
     private void setPassword(){
-        txtPassword.sendKeys(properties.getProperty("password"));
+//        txtPassword.sendKeys(properties.getProperty("password"));
+        txtPassword.sendKeys("y19021984");
     }
 
     //Click on login button

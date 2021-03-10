@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="General test suite" configfailurepolicy="continue">
+    <suite-files>
+        <!-- YahooTest -->
+        <suite-file path="Test1.xml" />
+        <!-- YahooTest1 -->
+        <suite-file path="Test2.xml" />
+    </suite-files>
+</suite>

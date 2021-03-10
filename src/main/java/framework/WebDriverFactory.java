@@ -12,6 +12,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -23,7 +24,7 @@ public class WebDriverFactory {
     private static final String CHROME = "chrome";
     private static final String FIREFOX = "firefox";
 
-    private static WebDriver webDriver;
+    private static final ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
     private static DesiredCapabilities dc;
 
 
@@ -40,7 +41,7 @@ public class WebDriverFactory {
      */
     public static WebDriver getInstance(String browser) {
 
-            if (webDriver == null) {
+            if (driverPool.get() == null) {
                 if (CHROME.equals(browser)) {
                     setChromeDriver();
 
@@ -50,20 +51,22 @@ public class WebDriverFactory {
                     dc.setCapability(ChromeOptions.CAPABILITY, options);
                     dc.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
 
-                    webDriver = new ChromeDriver(dc);
+                    WebDriver webDriver = new ChromeDriver(dc);
+                    driverPool.set(webDriver);
 
                 } else if (FIREFOX.equals(browser)) {
                     FirefoxProfile fp = new FirefoxProfile();
                     dc = DesiredCapabilities.firefox();
                     dc.setCapability(FirefoxDriver.PROFILE, fp);
 
-                    webDriver = new FirefoxDriver(dc);
+//                    webDriver = new FirefoxDriver(dc);
 
                 } else
                     throw new RuntimeException("Invalid browser property set in configuration file");
             }
 
-            return webDriver;
+            return driverPool.get();
+
         }
 
 
@@ -72,9 +75,9 @@ public class WebDriverFactory {
      * @throws Exception
      */
     public static void killDriverInstance() {
-        if (webDriver != null) {
-            webDriver.quit();
-            webDriver = null;
+        if (driverPool.get() != null) {
+            driverPool.get().quit();
+            driverPool.remove();
         }
     }
 
